@@ -7,8 +7,8 @@ function RecipeGenerator() {
   const [dietaryRestrictions, setDietaryRestrictions] = React.useState('');
   const [recipe, setRecipe] = React.useState('');
   const createRecipe = async () => {
-    //const response = await fetch(`http://localhost:8080/recipe-generator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`);
-    const response = await fetch(`https://recipe-generator-backend-0beu.onrender.com/recipe-generator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`);
+    const response = await fetch(`http://localhost:8080/recipe-generator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`);
+    //const response = await fetch(`https://recipe-generator-backend-0beu.onrender.com/recipe-generator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`);
     const data = await response.text();
     console.log(data);
     setRecipe(data);
