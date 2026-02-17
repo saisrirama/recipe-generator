@@ -1,38 +1,38 @@
 import React, { useState } from 'react';
 import './App.css';
 import RecipeGenerator from './RecipeGenerator';
+import { Utensils } from 'lucide-react';
 
 function App() {
-  const [activeTab, setActiveTab] = useState('recipe-generator');
-
-  const handleTabChange = (tab) => {
-    // alert(`Switching to ${tab} tab`);
-    setActiveTab(tab);
-  }
+  const [activeTab, setActiveTab] = useState('generator');
 
   return (
-    <div className="App">
-      <button className={activeTab === 'home' ? 'active' : ''}
-      onClick={() => handleTabChange('home')}>Home</button>
-      <button className={activeTab === 'recipe-generator' ? 'active' : ''}
-      onClick={() => handleTabChange('recipe-generator')}>Recipe Generator</button>
-
-<div>
-      {activeTab === 'home' && (
-        <div>
-          <h1>Welcome to the Home Page</h1>
-          <p>This is the home tab content.</p>
+    <div className="app-container">
+      <nav className="navbar">
+        <div className="nav-logo">
+          <Utensils size={28} color="#FF8C00" />
+          <span>AI Recipe Generator</span>
         </div>
-      )}
-      {/* Conditional Rendering - && */}
-      {activeTab === 'recipe-generator' && <RecipeGenerator/>}
+        <div className="nav-links">
+          <button
+            className={`nav-link-btn ${activeTab === 'generator' ? 'active' : ''}`}
+            onClick={() => setActiveTab('generator')}
+          >
+            Recipe Generator
+          </button>
+          <button
+            className={`nav-link-btn ${activeTab === 'favorites' ? 'active' : ''}`}
+            onClick={() => setActiveTab('favorites')}
+          >
+            My Favorites
+          </button>
+        </div>
+      </nav>
 
+      <main className="content-wrapper">
+        <RecipeGenerator view={activeTab} />
+      </main>
     </div>
-
-    
-    
-    </div>
-
   );
 }
 
