@@ -69,7 +69,7 @@ function RecipeGenerator({ view }) {
 
     //const url = `http://localhost:8080/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`;
     const url = `https://recipe-generator-backend-0beu.onrender.com/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`
-
+    //const response = await fetch(`https://recipe-generator-backend-0beu.onrender.com/recipe-generator?ingredients=${ingredients}&cuisine=${cuisine}&dietaryRestrictions=${dietaryRestrictions}`);
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 60000);
