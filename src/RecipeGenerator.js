@@ -15,7 +15,7 @@ import {
 
 const CUISINES = [
   'Italian', 'Indian', 'Japanese', 'Mexican', 'Chinese',
-  'French', 'Thai', 'Mediterranean', 'American', 'Random'
+  'French', 'Thai', 'Mediterranean', 'American', 'Other', 'Random'
 ];
 
 const DIETARY_OPTIONS = [
@@ -26,7 +26,9 @@ const DIETARY_OPTIONS = [
 function RecipeGenerator({ view }) {
   const [ingredients, setIngredients] = useState('');
   const [cuisine, setCuisine] = useState('Italian');
+  const [customCuisine, setCustomCuisine] = useState('');
   const [selectedDietary, setSelectedDietary] = useState([]);
+  const [customDietary, setCustomDietary] = useState('');
   const [recipe, setRecipe] = useState('');
   const [loading, setLoading] = useState(false);
   const [favorites, setFavorites] = useState([]);
@@ -54,8 +56,18 @@ function RecipeGenerator({ view }) {
     setLoading(true);
     setRecipe('');
 
-    const dietaryStr = selectedDietary.join(', ');
-    const url = `http://localhost:8080/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(cuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`;
+    let finalCuisine = cuisine;
+    if (cuisine === 'Other' && customCuisine.trim()) {
+      finalCuisine = customCuisine.trim();
+    }
+
+    const dietaryList = [...selectedDietary];
+    if (customDietary.trim()) {
+      dietaryList.push(customDietary.trim());
+    }
+    const dietaryStr = dietaryList.join(', ');
+
+    const url = `http://localhost:8080/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`;
 
     try {
       const controller = new AbortController();
@@ -83,7 +95,9 @@ function RecipeGenerator({ view }) {
   const clearAll = () => {
     setIngredients('');
     setCuisine('Italian');
+    setCustomCuisine('');
     setSelectedDietary([]);
+    setCustomDietary('');
     setRecipe('');
   };
 
@@ -94,13 +108,18 @@ function RecipeGenerator({ view }) {
     const titleMatch = recipe.match(/# (.*)/) || recipe.match(/\*\*(.*)\*\*/);
     const title = titleMatch ? titleMatch[1] : `Recipe ${favorites.length + 1}`;
 
+    const dietaryList = [...selectedDietary];
+    if (customDietary.trim()) {
+      dietaryList.push(customDietary.trim());
+    }
+
     const newFavorite = {
       id: Date.now(),
       title,
       content: recipe,
       date: new Date().toLocaleDateString(),
-      cuisine: cuisine,
-      dietary: selectedDietary
+      cuisine: cuisine === 'Other' ? customCuisine : cuisine,
+      dietary: dietaryList
     };
 
     const updated = [newFavorite, ...favorites];
@@ -226,6 +245,26 @@ function RecipeGenerator({ view }) {
               <option key={c} value={c}>{c}</option>
             ))}
           </select>
+
+          <AnimatePresence>
+            {cuisine === 'Other' && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                style={{ overflow: 'hidden' }}
+              >
+                <input
+                  type="text"
+                  className="input-field"
+                  style={{ marginTop: '10px' }}
+                  placeholder="Enter custom cuisine..."
+                  value={customCuisine}
+                  onChange={(e) => setCustomCuisine(e.target.value)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="form-group">
@@ -243,6 +282,14 @@ function RecipeGenerator({ view }) {
               </motion.div>
             ))}
           </div>
+          <input
+            type="text"
+            className="input-field"
+            style={{ marginTop: '10px' }}
+            placeholder="Other dietary (e.g. No Peanuts, Low Salt)..."
+            value={customDietary}
+            onChange={(e) => setCustomDietary(e.target.value)}
+          />
         </div>
 
         <div className="button-group">
