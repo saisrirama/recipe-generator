@@ -67,7 +67,8 @@ function RecipeGenerator({ view }) {
     }
     const dietaryStr = dietaryList.join(', ');
 
-    const url = `http://localhost:8080/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`;
+    //const url = `http://localhost:8080/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`;
+    const url = `https://recipe-generator-backend-0beu.onrender.com/recipe-generator?ingredients=${encodeURIComponent(ingredients)}&cuisine=${encodeURIComponent(finalCuisine)}&dietaryRestrictions=${encodeURIComponent(dietaryStr)}`
 
     try {
       const controller = new AbortController();
