@@ -463,27 +463,140 @@ body {
   border-radius: 20px !important;
 }
 
-/* Mobile */
-@media (max-width: 600px) {
+/* Responsive Adjustments */
+
+/* Desktop & Large Screens */
+@media (min-width: 1025px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}
+
+/* Tablets (1024px and below) */
+@media (max-width: 1024px) {
   .glass-card {
-    padding: 24px;
-    border-radius: 0;
-    margin-top: 0;
+    max-width: 90%;
+    padding: 30px;
+  }
+
+  .header h1 {
+    font-size: 2.2rem;
+  }
+
+  .nav-links {
+    gap: 20px;
+  }
+}
+
+/* Mobile Devices (768px and below) */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .mobile-menu-btn {
+    display: flex;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-dark);
+    padding: 0;
+    z-index: 101;
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    z-index: 100;
+    padding: 100px 20px 20px;
+  }
+
+  .nav-links.mobile-open {
+    display: flex;
+  }
+
+  .nav-link-btn {
+    font-size: 1.5rem;
+  }
+
+  .content-wrapper {
+    padding: 20px 15px;
+  }
+
+  .glass-card {
+    max-width: 100%;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 10px;
   }
 
   .header h1 {
     font-size: 1.8rem;
   }
 
+  .header p {
+    font-size: 1rem;
+  }
+
   .button-group {
     flex-direction: column;
   }
 
-  .navbar {
-    padding: 15px 20px;
+  .btn {
+    width: 100%;
   }
 
-  .nav-links {
-    display: none;
+  .chip-container {
+    justify-content: center;
+  }
+
+  .recipe-actions {
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .favorite-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .fav-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .recipe-output.full-view {
+    padding: 20px !important;
+  }
+}
+
+/* Small Mobile Devices (480px and below) */
+@media (max-width: 480px) {
+  .header h1 {
+    font-size: 1.6rem;
+  }
+
+  .nav-logo span {
+    font-size: 1.1rem;
+  }
+
+  .recipe-actions .action-btn {
+    font-size: 0.85rem;
+    padding: 8px 12px;
   }
 }
