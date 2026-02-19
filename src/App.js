@@ -7,6 +7,18 @@ function App() {
   const [activeTab, setActiveTab] = useState('generator');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Lock scroll when mobile menu is open
+  React.useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleNavClick = (tab) => {
@@ -25,6 +37,10 @@ function App() {
         <button className="mobile-menu-btn" onClick={toggleMenu}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
+
+        {isMenuOpen && (
+          <div className="sidebar-backdrop" onClick={toggleMenu} />
+        )}
 
         <div className={`nav-links ${isMenuOpen ? 'mobile-open' : ''}`}>
           <button
